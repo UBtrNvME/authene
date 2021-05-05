@@ -7,3 +7,4 @@ class Credentials:
     """Credentials object that is used for authentication purposes."""
 
     username: str
+    password: str
