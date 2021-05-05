@@ -1,0 +1,41 @@
+exclude: |
+  (?x)
+  ^tests/ | __init__.py | __main__.py
+default_language_version:
+  python: python3
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0  # Use the ref you want to point at
+    hooks:
+      - id: trailing-whitespace
+  - repo: https://github.com/psf/black
+    rev: 20.8b1 # Replace by any tag/version: https://github.com/psf/black/tags
+    hooks:
+      - id: black
+        name: blacking
+        language_version: python3 # Should be a command that runs python3.6+
+        args: [--config=./pyproject.toml]
+  - repo: https://github.com/asottile/seed-isort-config
+    rev: v1.9.4
+    hooks:
+      - id: seed-isort-config
+        name: import sorting
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v4.3.21  # pick the isort version you'd like to use from https://github.com/pre-commit/mirrors-isort/releases
+    hooks:
+      - id: isort
+        name: import sorting
+        args: [--settings-path=./setup.cfg]
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v2.5.3
+    hooks:
+      - id: pylint
+        name: pylint
+        verbose: true
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: ''  # pick a git hash / tag to point to
+    hooks:
+      - id: flake8
+        name: flake
+        additional_dependencies: [flake8-docstrings]
+        exclude: ^testing/(data|examples)/
