@@ -2,7 +2,8 @@
 from datetime import datetime, timedelta
 
 import jwt
-from usecase import UseCase
+
+from authene.auth.usecases.usecase import UseCase
 
 JWT_LIFE_SPAN_IN_MINUTES = 60
 JWT_ALGORITHM = "HS256"

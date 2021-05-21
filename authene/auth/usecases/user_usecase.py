@@ -2,9 +2,8 @@
 
 All operations with user should be handled in here.
 """
-from token_usecase import GenerateToken
-
 from authene.auth.domain.password import passwordlib
+from authene.auth.usecases.token_usecase import GenerateToken
 from authene.auth.usecases.usecase import UseCase
 
 
