@@ -6,7 +6,7 @@ Implementations of this interface should be Entity Driven!
 from abc import ABC, abstractmethod
 
 
-class AbstractRepository(ABC):
+class Repository(ABC):
     """Abstract repository class, that defines simple interface over persistent data."""
 
     def __init__(self, adapter):
