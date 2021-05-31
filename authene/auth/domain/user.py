@@ -1,30 +1,34 @@
-"""Entities that are part of the authorisation and authentication logic."""
-from dataclasses import dataclass
+import uuid
+from abc import ABCMeta, abstractmethod
 
-from authene.auth.domain.password import passwordlib
+from authene.auth.domain.password import Password
+from authene.auth.domain.username import Username
+from authene.base.entity import Entity
 
 
-class User:
-    """Credentials object that is used for authentication purposes."""
-
-    def __init__(
-        self, email, password, first_name, last_name, username
-    ):  # pylint: disable=too-many-arguments
-        """Initialise User instance."""
-        self.email = email
-        self.first_name = first_name
-        self.last_name = last_name
+class User(Entity):
+    def __init__(self, entity_id, entity_version, username, password):
+        super().__init__(entity_id, entity_version)
         self.username = username
         self.password = password
 
-    def match_password(self, candidate):
-        """Match user password with candidate password."""
-        return passwordlib.compare_password(self.password, candidate)
+    @classmethod
+    def register_user(cls, username, password):
+        username = Username(username)
+        password = Password.create_from_plain(password)
+        return cls(
+            entity_version=0,
+            entity_id=cls.generate_uuid(),
+            username=username,
+            password=password,
+        )
+
+    @classmethod
+    def generate_uuid(cls):
+        return "user-{}".format(uuid.uuid4())
 
 
-@dataclass
-class Credentials:
-    """Dataclass for Credentials."""
-
-    username: str
-    password: str
+class Repository(metaclass=ABCMeta):
+    @abstractmethod
+    def find_by_username(self, username):
+        """Find user by his/her username."""
