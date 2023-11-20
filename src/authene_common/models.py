@@ -5,10 +5,10 @@ from pydantic import BaseModel, EmailStr, Field, SecretStr, conint, constr
 from sqlalchemy import Boolean, Column, DateTime, String, event
 
 PrimaryKey = conint(gt=0, lt=2147483647)
-NameStr = constr(regex=r"^(?!\s*$).+", strip_whitespace=True, min_length=3)
+NameStr = constr(pattern=r"^(?!\s*$).+", strip_whitespace=True, min_length=3)
 
 
-class TimestampMixin(object):
+class TimeStampMixin(object):
     created_at = Column(DateTime, default=datetime.utcnow())
     created_at._creation_order = 9998
     updated_at = Column(DateTime, default=datetime.utcnow())
@@ -65,7 +65,7 @@ class ResourceBase(AutheneBase):
     weblink: Optional[str] = Field(None)
 
 
-class ContactBase(DispatchBase):
+class ContactBase(AutheneBase):
     email: EmailStr
     name: Optional[str] = Field(None)
     is_active: Optional[bool] = True

@@ -9,6 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import scoped_session
 from starlette.requests import Request
 
+from authene.api import api_router
 from authene_common import config
 from authene_common.database import engine, sessionmaker
 
